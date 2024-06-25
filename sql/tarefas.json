@@ -1,0 +1,23 @@
+[
+    {
+        "titulo": "Comprar mantimentos",
+        "descricao": "Ir ao supermercado e comprar itens para a semana",
+        "data_vencimento": "2024-06-25",
+        "id_categoria": 1,
+        "id_cliente": 10
+    },
+    {
+        "titulo": "Estudar Python",
+        "descricao": "Revisar fundamentos básicos de Python",
+        "data_vencimento": "2024-06-26",
+        "id_categoria": 3,
+        "id_cliente": 10
+    },
+    {
+        "titulo": "Preparar apresentação",
+        "descricao": "Montar slides e preparar material para reunião",
+        "data_vencimento": "2024-06-28",
+        "id_categoria": 2,
+        "id_cliente": 10
+    }
+]

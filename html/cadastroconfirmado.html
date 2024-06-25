@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <title>Loja Virtual :: Cadastro Confirmado</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="/loja">
+                <img src="/static/img/logotipo.svg" style="height: 64px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/cadastro">Quero me cadastrar!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/loja/entrar">Entrar</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Olá, <b>Fulano</b>!
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/loja/pedidos">Meus Pedidos</a></li>
+                            <li><a class="dropdown-item" href="/loja/perfil">Meu Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/loja">Sair</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/carrinho">
+                            <i class="bi bi-cart-fill"></i>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="O que deseja buscar?">
+                    <a href="/loja/buscar" class="btn btn-danger" type="submit">Buscar</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <main class="container my-3">
+        <h1 class="display-5"><b>Cadastro Realizado com Sucesso!</b></h1>
+        <hr>
+        <p class="lead">Parabéns! Agora você está cadastrado na <b>Loja Virtual</b> e pode realizar compras, acompanhar seus pedidos, receber mensagens com nossas ofertas e usufruir de todos os demais benefícios que oferecemos. Para entrar agora mesmo, basta clicar no botão a seguir.</p>
+        <p>
+            <a href="/loja/entrar" class="btn btn-danger">Entrar</a>
+        </p>
+        <p class="lead">
+            Atenciosamente,<br>
+            Equipe de Suporte da <b>Loja Virtual</b>
+        </p>
+    </main>
+    <footer class="bg-danger text-white text-center p-3 mt-auto">
+        <p class="lead mb-0">Loja Virtual &reg;</p>
+        <p class="lead mb-0">Copyright &copy; 2024</p>
+        <p class="lead">Todos os direitos reservados</p>
+    </footer>
+    <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

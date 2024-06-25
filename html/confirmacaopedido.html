@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <title>Loja Virtual :: Confirmação de Pedido</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="/loja">
+                <img src="/static/img/logotipo.svg" style="height: 64px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/cadastro">Quero me cadastrar!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/entrar">Entrar</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Olá, <b>Fulano</b>!
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/loja/pedidos">Meus Pedidos</a></li>
+                            <li><a class="dropdown-item" href="/loja/perfil">Meu Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/loja">Sair</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/carrinho">
+                            <i class="bi bi-cart-fill"></i>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="O que deseja buscar?">
+                    <a href="/loja/buscar" class="btn btn-danger" type="submit">Buscar</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <main class="container my-3">
+        <h1 class="display-5"><b>Confirme os Dados de Seu Pedido</b></h1>
+        <hr>
+        <div class="row">
+            <div class="col-4">
+                <h2 class="display-6">Endereço de Entrega</h2>
+                <p class="lead">
+                    <b>Endereço de Entrega</b> <br>
+                    Rua Catatau das Flores, 7 <br>
+                    Bairro Bacurau <br>
+                    Cachoeiro de Itapemirim/ES <br>
+                    CEP 29.300-900
+                </p>
+                <h2 class="display-6">Valor</h2>
+                <h3 class="text-success">R$ 23.992,00</h3>
+                <a href="/loja/pedidoconfirmado" class="btn btn-danger btn-lg mt-3">
+                    <img src="/static/img/iconemercadopago.svg" style="height: 32px">
+                    Pagar com Mercado Pago</a>
+            </div>
+            <div class="col-8">
+                <h2 class="display-6">Itens Neste Pedido</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th>R$ Unit.</th>
+                            <th>Qtde.</th>
+                            <th>R$ Item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="/static/img/produtos/0004.jpg" style="height: 48px;" class="rounded"></td>
+                            <td>Air Pods Pro</td>
+                            <td>2.999,00</td>
+                            <td>
+                                <span class="mx-2">2</span>
+                            </td>
+                            <td>5.998,00</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/img/produtos/0004.jpg" style="height: 48px;" class="rounded"></td>
+                            <td>Air Pods Pro</td>
+                            <td>2.999,00</td>
+                            <td>
+                                <span class="mx-2">2</span>
+                            </td>
+                            <td>5.998,00</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/img/produtos/0004.jpg" style="height: 48px;" class="rounded"></td>
+                            <td>Air Pods Pro</td>
+                            <td>2.999,00</td>
+                            <td>
+                                <span class="mx-2">2</span>
+                            </td>
+                            <td>5.998,00</td>
+                        </tr>
+                        <tr>
+                            <td><img src="/static/img/produtos/0004.jpg" style="height: 48px;" class="rounded"></td>
+                            <td>Air Pods Pro</td>
+                            <td>2.999,00</td>
+                            <td>
+                                <span class="mx-2">2</span>
+                            </td>
+                            <td>5.998,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-danger text-white text-center p-3 mt-auto">
+        <p class="lead mb-0">Loja Virtual &reg;</p>
+        <p class="lead mb-0">Copyright &copy; 2024</p>
+        <p class="lead">Todos os direitos reservados</p>
+    </footer>
+    <script src="/static/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

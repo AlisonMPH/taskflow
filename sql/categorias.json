@@ -1,0 +1,14 @@
+[
+    {
+        "nome": "Tarefa Pessoal",
+        "descricao": "Tarefas pessoais diárias"
+    },
+    {
+        "nome": "Trabalho",
+        "descricao": "Tarefas relacionadas ao trabalho"
+    },
+    {
+        "nome": "Estudo",
+        "descricao": "Tarefas relacionadas aos estudos"
+    }
+]

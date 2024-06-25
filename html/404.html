@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <title>Loja Virtual</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="/loja">
+                <img src="/static/img/logotipo.svg" style="height: 64px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/loja">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/cadastro">Quero me cadastrar!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/entrar">Entrar</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Olá, <b>Fulano</b>!
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/loja/pedidos">Meus Pedidos</a></li>
+                            <li><a class="dropdown-item" href="/loja/perfil">Meu Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/loja">Sair</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loja/carrinho">
+                            <i class="bi bi-cart-fill"></i>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="O que deseja buscar?">
+                    <a href="/loja/buscar" class="btn btn-danger" type="submit">Buscar</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <main class="container my-3">
+        <h1 class="display-5"><b>Página Não Encontrada</b></h1>
+        <hr>
+        <p class="lead">
+            A página buscada não existe ou foi comida pelo totó. O endereço da página pode estar expirado, incorreto ou a página pode ter sido removida.
+        </p>
+        <p>
+            <img src="/static/img/404.png" alt="Totó comendo uma página." height="300px">
+        </p>
+    </main>
+</body>
