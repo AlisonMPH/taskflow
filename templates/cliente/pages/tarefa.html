@@ -1,0 +1,50 @@
+{% extends "pages/base.html" %}
+{% block subtitulo %}Minhas Tarefas{% endblock %}
+{% block conteudo %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Minhas Tarefas</h2>
+        <a href="/cliente/nova_tarefa" class="btn btn-primary">Incluir Tarefa</a>
+    </div>
+    <div class="row">
+        {% if tarefas %}
+            {% for tarefa in tarefas %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tarefa.titulo }}</h5>
+                        <p class="card-text">{{ tarefa.descricao }}</p>
+                        <p class="card-text"><small class="text-muted">Data de Vencimento: {{ tarefa.data_vencimento }}</small></p>
+                        <a href="{{ url_for('alterar_tarefa', id=tarefa.id) }}" class="btn btn-warning btn-sm">Alterar</a>
+                        <button class="btn btn-danger btn-sm" onclick="excluirTarefa({{ tarefa.id }})">Excluir</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">Nenhuma tarefa encontrada. Adicione uma nova tarefa.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function excluirTarefa(id) {
+    if (confirm('Você tem certeza que deseja excluir esta tarefa?')) {
+        fetch(`/cliente/excluir_tarefa/${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                // Recarrega a página após a exclusão (opcional)
+                window.location.reload();
+            } else {
+                console.error('Erro ao excluir a tarefa');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao excluir a tarefa:', error);
+        });
+    }
+}
+</script>
+{% endblock %}

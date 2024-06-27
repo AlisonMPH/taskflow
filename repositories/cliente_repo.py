@@ -2,9 +2,7 @@ import json
 import sqlite3
 from typing import List, Optional
 from models.cliente_model import Cliente
-from models.tarefa_model import Tarefa
 from sql.cliente_sql import *
-from sql.tarefa_sql import SQL_OBTER_TAREFAS_POR_CLIENTE
 from util.database import obter_conexao
 
 
@@ -31,7 +29,6 @@ class ClienteRepo:
                         cliente.telefone,
                         cliente.email,
                         cliente.senha,
-                        cliente.admin,
                     ),
                 )
                 if cursor.rowcount > 0:
@@ -87,11 +84,11 @@ class ClienteRepo:
             return False
 
     @classmethod
-    def obter_um(cls, id: int) -> Optional[Cliente]:
+    def obter_por_id(cls, id: int) -> Optional[Cliente]:
         try:
             with obter_conexao() as conexao:
                 cursor = conexao.cursor()
-                tupla = cursor.execute(SQL_OBTER_UM, (id,)).fetchone()
+                tupla = cursor.execute(SQL_OBTER_POR_ID, (id,)).fetchone()
                 cliente = Cliente(*tupla)
                 return cliente
         except sqlite3.Error as ex:
@@ -148,28 +145,6 @@ class ClienteRepo:
             return None
 
     @classmethod
-    def tornar_admin(cls, id: int) -> bool:
-        try:
-            with obter_conexao() as conexao:
-                cursor = conexao.cursor()
-                cursor.execute(SQL_TORNAR_ADMIN, (id,))
-                return cursor.rowcount > 0
-        except sqlite3.Error as ex:
-            print(ex)
-            return False
-
-    @classmethod
-    def revogar_admin(cls, id: int) -> bool:
-        try:
-            with obter_conexao() as conexao:
-                cursor = conexao.cursor()
-                cursor.execute(SQL_REVOGAR_ADMIN, (id,))
-                return cursor.rowcount > 0
-        except sqlite3.Error as ex:
-            print(ex)
-            return False
-
-    @classmethod
     def obter_por_email(cls, email: str) -> Optional[Cliente]:
         try:
             with obter_conexao() as conexao:
@@ -220,15 +195,3 @@ class ClienteRepo:
         except sqlite3.Error as ex:
             print(ex)
             return False
-        
-    @classmethod
-    def obter_tarefas_por_cliente(cls, id_cliente: int) -> Optional[List[Tarefa]]:
-        try:
-            with obter_conexao() as conexao:
-                cursor = conexao.cursor()
-                tuplas = cursor.execute(SQL_OBTER_TAREFAS_POR_CLIENTE, (id_cliente,)).fetchall()
-                tarefas = [Tarefa(*t) for t in tuplas]
-                return tarefas
-        except sqlite3.Error as ex:
-            print(ex)
-            return None

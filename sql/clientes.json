@@ -8,7 +8,6 @@
         "telefone": "(11) 99999-8888",
         "email": "joao@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -20,7 +19,6 @@
         "telefone": "(21) 98888-7777",
         "email": "maria@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -32,7 +30,6 @@
         "telefone": "(31) 97777-6666",
         "email": "carlos@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -44,7 +41,6 @@
         "telefone": "(41) 96666-5555",
         "email": "ana@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -56,7 +52,6 @@
         "telefone": "(51) 95555-4444",
         "email": "paulo@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -68,7 +63,6 @@
         "telefone": "(61) 94444-3333",
         "email": "fernanda@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -80,7 +74,6 @@
         "telefone": "(71) 93333-2222",
         "email": "ricardo@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -92,7 +85,6 @@
         "telefone": "(81) 92222-1111",
         "email": "juliana@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -104,7 +96,6 @@
         "telefone": "(91) 91111-0000",
         "email": "marcos@email.com",
         "senha": "$2b$12$TJYfq2QCDwstKUtrpx6ZK.wnKS2AXPqhcKGVsffuVetYg1eUTMot2",
-        "admin": 0,
         "token": ""
     },
     {
@@ -116,19 +107,17 @@
         "telefone": "(92) 90000-9999",
         "email": "patricia@email.com",
         "senha": "$2b$12$UiJpF8KbWg05Z071209MduFo9SovIO/WBxxhQ.A8iKr1baR1GQnKO",
-        "admin": 0,
         "token": ""
     },
     {
-        "id": 11,
+        "id": 10,
         "nome": "Alison Mozer Santos",
         "cpf": "149.094.167-30",
-        "data_nascimento": "2001-06-11",
-        "endereco": "Rua J, 707",
-        "telefone": "(92) 90000-9999",
-        "email": "alisonmozer@email.com",
-        "senha": "$2b$12$UiJpF8KbWg05Z071209MduFo9SovIO/WBxxhQ.A8iKr1baR1GQnKO",
-        "admin": 0,
+        "data_nascimento": "2001-11-06",
+        "endereco": "Rua Isidoro Sechin, 43",
+        "telefone": "(28) 99885-6643",
+        "email": "alisonmozer@gmail.com",
+        "senha": "$2b$12$1w5TAufiHQyhH46Ugo3oTOR1G0ZOiPpG4Z78sw0REZXGadYR0exP6",
         "token": ""
     }
 ]

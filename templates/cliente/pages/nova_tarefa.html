@@ -1,0 +1,31 @@
+{% extends "pages/base.html" %}
+{% block subtitulo %}Nova Tarefa{% endblock %}
+{% block conteudo %}
+<div class="container mt-4">
+    <h2>Cadastrar Nova Tarefa</h2>
+    <form action="{{ url_for('criar_tarefa') }}" method="post">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="data_vencimento" class="form-label">Data de Vencimento</label>
+            <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_categoria" class="form-label">Categoria</label>
+            <select class="form-control" id="id_categoria" name="id_categoria" required>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -13,5 +13,4 @@ class Cliente:
     telefone: Optional[str] = None
     email: Optional[str] = None
     senha: Optional[str] = None
-    admin: Optional[bool] = False
     token: Optional[str] = None

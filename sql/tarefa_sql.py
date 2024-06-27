@@ -31,7 +31,7 @@ SQL_ATUALIZAR_TAREFA = """
 
 SQL_EXCLUIR_TAREFA = """
     DELETE FROM TAREFA
-    WHERE id = ? AND id_cliente = ?
+    WHERE id = ?
 """
 
 SQL_OBTER_UM = """

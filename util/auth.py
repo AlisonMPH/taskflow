@@ -30,6 +30,18 @@ async def middleware_autenticacao(request: Request, call_next):
     return response
 
 
+async def checar_permissao(request: Request):
+    cliente = request.state.cliente if hasattr(request.state, "cliente") else None
+    area_do_cliente = request.url.path.startswith("/cliente")
+    area_do_admin = request.url.path.startswith("/admin")
+    if (area_do_cliente or area_do_admin) and not cliente:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    # if area_do_cliente and cliente.perfil != 1:
+    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+    # if area_do_admin and cliente.perfil != 2:
+    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
+
 def obter_hash_senha(senha: str) -> str:
     try:
         hashed = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
@@ -50,8 +62,3 @@ def gerar_token(length: int = 32) -> str:
         return secrets.token_hex(length)
     except ValueError:
         return ""
-
-
-def checar_autorizacao(request: Request):
-    if not request.state.cliente:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)

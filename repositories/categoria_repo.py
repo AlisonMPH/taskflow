@@ -2,7 +2,6 @@ import json
 import sqlite3
 from typing import List, Optional
 from models.categoria_model import Categoria
-from models.tarefa_model import Tarefa
 from sql.categoria_sql import *
 from util.database import obter_conexao
 
@@ -21,14 +20,22 @@ class CategoriaRepo:
                 cursor = conexao.cursor()
                 cursor.execute(SQL_INSERIR, (
                     categoria.nome,
-                    categoria.descricao
-                ))
+                    categoria.descricao,
+                ),)
                 if cursor.rowcount > 0:
                     categoria.id = cursor.lastrowid
                     return categoria
         except sqlite3.Error as ex:
             print(ex)
             return None
+        
+    @classmethod
+    def inserir_categorias_json(cls, arquivo_json: str):
+        if CategoriaRepo.obter_quantidade() == 0:
+            with open(arquivo_json, "r", encoding="utf-8") as arquivo:
+                categorias = json.load(arquivo)
+                for categoria in categorias:
+                    CategoriaRepo.inserir(Categoria(**categoria))
 
     @classmethod
     def obter_todos(cls) -> List[Categoria]:
