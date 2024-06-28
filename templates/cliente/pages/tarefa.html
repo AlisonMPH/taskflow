@@ -12,8 +12,20 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ tarefa.titulo }}</h5>
-                        <p class="card-text">{{ tarefa.descricao }}</p>
+                        <h5 class="card-title">
+                            {% if tarefa.titulo|length > 25 %}
+                                {{ tarefa.titulo[:25] }}...
+                            {% else %}
+                                {{ tarefa.titulo }}
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">
+                            {% if tarefa.descricao|length > 40 %}
+                                {{ tarefa.descricao[:40] }}...
+                            {% else %}
+                                {{ tarefa.descricao }}
+                            {% endif %}
+                        </p>
                         <p class="card-text"><small class="text-muted">Data de Vencimento: {{ tarefa.data_vencimento }}</small></p>
                         <a href="{{ url_for('alterar_tarefa', id=tarefa.id) }}" class="btn btn-warning btn-sm">Alterar</a>
                         <button class="btn btn-danger btn-sm" onclick="excluirTarefa({{ tarefa.id }})">Excluir</button>

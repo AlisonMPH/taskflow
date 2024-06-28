@@ -58,7 +58,7 @@ class TarefaRepo:
 
 
     @classmethod
-    def alterar(cls, tarefa: Tarefa) -> bool:
+    def alterar_tarefa(cls, tarefa: Tarefa) -> bool:
         try:
             with obter_conexao() as conexao:
                 cursor = conexao.cursor()
@@ -69,7 +69,6 @@ class TarefaRepo:
                         tarefa.descricao,
                         tarefa.data_vencimento,
                         tarefa.id_categoria,
-                        tarefa.id_cliente,
                         tarefa.id,
                     ),
                 )

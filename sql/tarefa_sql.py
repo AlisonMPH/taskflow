@@ -26,7 +26,7 @@ SQL_OBTER_TAREFAS_CLIENTE = """
 SQL_ATUALIZAR_TAREFA = """
     UPDATE TAREFA
     SET titulo = ?, descricao = ?, data_vencimento = ?, id_categoria = ?
-    WHERE id = ? AND id_cliente = ?
+    WHERE id = ?
 """
 
 SQL_EXCLUIR_TAREFA = """

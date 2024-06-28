@@ -1,20 +1,15 @@
 from datetime import datetime
 from http.client import HTTPResponse
-from fastapi import APIRouter, Depends, Form, HTTPException, Query, Request, status
+from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from dtos.alterar_cliente_dto import AlterarClienteDTO
 from dtos.alterar_senha_dto import AlterarSenhaDTO
 from dtos.nova_tarefa_dto import NovaTarefaDTO
 from models.cliente_model import Cliente
-from models.item_pedido_model import ItemPedido
-from models.pedido_model import Pedido
 from models.tarefa_model import Tarefa
 from repositories.categoria_repo import CategoriaRepo
 from repositories.cliente_repo import ClienteRepo
-from repositories.item_pedido_repo import ItemPedidoRepo
-from repositories.pedido_repo import PedidoRepo
-from repositories.produto_repo import ProdutoRepo
 from repositories.tarefa_repo import TarefaRepo
 from util.auth import conferir_senha, obter_hash_senha
 from util.cookies import (
@@ -28,15 +23,18 @@ from util.templates import obter_jinja_templates
 router = APIRouter(prefix="/cliente")
 templates = obter_jinja_templates("templates/cliente")
 
-
-@router.get("/pedidos")
-async def get_pedidos(request: Request):
+@router.get("/")
+async def get_root(request: Request):
+    id_cliente = request.state.cliente.id
+    tarefas = TarefaRepo.obter_tarefas_do_cliente(id_cliente)
     return templates.TemplateResponse(
-        "pages/pedidos.html",
-        {"request": request},
+        "pages/tarefa.html",
+        {
+            "request": request,
+            "tarefas": tarefas,
+        },
     )
-
-
+    
 @router.get("/cadastro")
 async def get_cadastro(request: Request):
     return templates.TemplateResponse(
@@ -71,26 +69,51 @@ async def nova_tarefa(request: Request):
 
 @router.get("/tarefas/{id}/alterar", response_class=HTMLResponse)
 async def alterar_tarefa(request: Request, id: int):
-    # Lógica para obter a tarefa com o ID fornecido e renderizar o formulário de alteração
+    categorias = CategoriaRepo.obter_todos()
     tarefa = TarefaRepo.obter_tarefa_por_id(id)
     if not tarefa:
-        # Lidar com o caso em que a tarefa não existe
         return HTTPResponse(status_code=404)
 
     return templates.TemplateResponse(
         "pages/alterar_tarefa.html",
         {
             "request": request,
+            "categorias": categorias,
             "tarefa": tarefa,
         },
     )
+
+@router.post("/tarefas/{id}/alterar", response_class=HTMLResponse)
+async def alterar_tarefa(request: Request, id: int, titulo: str = Form(...), descricao: str = Form(...), data_vencimento: str = Form(...), id_categoria: int = Form(...)):
+    tarefa = TarefaRepo.obter_tarefa_por_id(id)
+    if not tarefa:
+        return HTMLResponse(status_code=404)
+
+    tarefa_atualizada = Tarefa(
+        id=id,
+        titulo=titulo,
+        descricao=descricao,
+        data_vencimento=data_vencimento,
+        id_categoria=id_categoria
+    )
     
+    if TarefaRepo.alterar_tarefa(tarefa_atualizada):
+        response = RedirectResponse("/cliente/tarefas", status.HTTP_303_SEE_OTHER)
+        adicionar_mensagem_sucesso(response, "Tarefa alterada com sucesso!")
+    else:
+        response = JSONResponse(status_code=500, content={"error": "Não foi possível alterar a tarefa."})
+        
+    return response
+
 @router.delete("/excluir_tarefa/{id}")
 async def excluir_tarefa(id: int):
     if TarefaRepo.excluir(id):
-        return {"message": f"Tarefa {id} excluída com sucesso"}
+        response = RedirectResponse("/cliente/tarefas", status.HTTP_303_SEE_OTHER)
+        adicionar_mensagem_sucesso(response, "Tarefa excluida com sucesso!")
     else:
-        return {"message": f"Não foi possível excluir a tarefa {id}"}, 404
+        response = JSONResponse(status_code=500, content={"error": "Não foi possível excluir a tarefa."})
+        
+    return response
 
 @router.post("/post_nova_tarefa")
 async def criar_tarefa(request: Request):
@@ -108,8 +131,8 @@ async def criar_tarefa(request: Request):
         id_categoria=id_categoria,
         id_cliente=id_cliente
     )
-    response = JSONResponse({"redirect": {"url": "/cliente/tarefas"}})
     if TarefaRepo.inserir(nova_tarefa):
+        response = RedirectResponse("/cliente/tarefas", status.HTTP_303_SEE_OTHER)
         adicionar_mensagem_sucesso(response, "Tarefa criada com sucesso!")
     else:
         response = JSONResponse(status_code=500, content={"error": "Não foi possível criar a tarefa."})
@@ -161,114 +184,4 @@ async def get_sair(request: Request):
     response = RedirectResponse("/", status.HTTP_303_SEE_OTHER)
     excluir_cookie_auth(response)
     adicionar_mensagem_sucesso(response, "Saída realizada com sucesso!")
-    return response
-
-
-@router.get("/carrinho")
-async def get_carrinho(request: Request, id_produto: int = Query(0)):
-
-    pedidos = PedidoRepo.obter_por_estado(request.state.cliente.id, 1)
-    pedido_carrinho = pedidos[0] if pedidos else None
-    if pedido_carrinho:
-        itens_pedido = ItemPedidoRepo.obter_por_pedido(pedido_carrinho.id)
-    return templates.TemplateResponse(
-        "pages/carrinho.html",
-        {"request": request, "itens": itens_pedido},
-    )
-
-
-@router.post("/post_adicionar_carrinho", response_class=RedirectResponse)
-async def post_adicionar_carrinho(request: Request, id_produto: int = Form(...)):
-    produto = ProdutoRepo.obter_um(id_produto)
-    mensagem = f"O produto <b>{produto.nome}</b> foi adicionado ao carrinho."
-    pedidos = PedidoRepo.obter_por_estado(request.state.cliente.id, 1)
-    pedido_carrinho = pedidos[0] if pedidos else None
-    if pedido_carrinho == None:
-        pedido_carrinho = Pedido(
-            0,
-            datetime.now(),
-            0,
-            request.state.cliente.endereco,
-            1,
-            request.state.cliente.id,
-        )
-        pedido_carrinho = PedidoRepo.inserir(pedido_carrinho)
-    qtde = ItemPedidoRepo.obter_quantidade_por_produto(pedido_carrinho.id, id_produto)
-    if qtde == 0:
-        item_pedido = ItemPedido(
-            pedido_carrinho.id, id_produto, produto.nome, produto.preco, 1, 0
-        )
-        ItemPedidoRepo.inserir(item_pedido)
-    else:
-        ItemPedidoRepo.aumentar_quantidade_produto(pedido_carrinho.id, id_produto)
-        mensagem = f"O produto <b>{produto.nome}</b> já estava no carrinho e teve sua quantidade aumentada."
-    response = RedirectResponse("/cliente/carrinho", status.HTTP_303_SEE_OTHER)
-    adicionar_mensagem_sucesso(response, mensagem)
-    return response
-
-
-@router.post("/post_aumentar_item", response_class=RedirectResponse)
-async def post_aumentar_item(request: Request, id_produto: int = Form(0)):
-    produto = ProdutoRepo.obter_um(id_produto)
-    pedidos = PedidoRepo.obter_por_estado(request.state.cliente.id, 1)
-    pedido_carrinho = pedidos[0] if pedidos else None
-
-    if pedido_carrinho == None:
-        response = RedirectResponse(
-            f"/produto?id={id_produto}", status.HTTP_303_SEE_OTHER
-        )
-        adicionar_mensagem_alerta(
-            f"Seu carrinho não foi encontrado. Adicione este produto ao carrinho novamente."
-        )
-        return response
-
-    qtde = ItemPedidoRepo.obter_quantidade_por_produto(pedido_carrinho.id, id_produto)
-    if qtde == 0:
-        response = RedirectResponse(
-            f"/produto?id={id_produto}", status.HTTP_303_SEE_OTHER
-        )
-        adicionar_mensagem_alerta(
-            f"Este produto não foi encontrado em seu carrinho. Adicione-o novamente."
-        )
-        return response
-
-    ItemPedidoRepo.aumentar_quantidade_produto(pedido_carrinho.id, id_produto)
-    response = RedirectResponse("/cliente/carrinho", status.HTTP_303_SEE_OTHER)
-    adicionar_mensagem_sucesso(
-        response,
-        f"O produto <b>{produto.nome}</b> teve sua quantidade aumentada para <b>{qtde+1}</b>.",
-    )
-    return response
-
-
-@router.post("/post_reduzir_item", response_class=RedirectResponse)
-async def post_reduzir_item(request: Request, id_produto: int = Form(0)):
-    produto = ProdutoRepo.obter_um(id_produto)
-    pedidos = PedidoRepo.obter_por_estado(request.state.cliente.id, 1)
-    pedido_carrinho = pedidos[0] if pedidos else None
-    response = RedirectResponse("/cliente/carrinho", status.HTTP_303_SEE_OTHER)
-
-    if pedido_carrinho == None:
-        adicionar_mensagem_alerta(f"Seu carrinho não foi encontrado.")
-        return response
-
-    qtde = ItemPedidoRepo.obter_quantidade_por_produto(pedido_carrinho.id, id_produto)
-    if qtde == 0:
-        adicionar_mensagem_alerta(
-            f"O produto {id_produto} não foi encontrado em seu carrinho."
-        )
-        return response
-
-    if qtde == 1:
-        ItemPedidoRepo.excluir(pedido_carrinho.id, id_produto)
-        adicionar_mensagem_sucesso(
-            response, f"O produto <b>{produto.nome}</b> foi excluído do carrinho."
-        )
-        return response
-
-    ItemPedidoRepo.diminuir_quantidade_produto(pedido_carrinho.id, id_produto)
-    adicionar_mensagem_sucesso(
-        response,
-        f"O produto <b>{produto.nome}</b> teve sua quantidade diminuída para <b>{qtde+1}</b>.",
-    )
     return response
