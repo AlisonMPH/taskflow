@@ -31,13 +31,10 @@ async def get_html(arquivo: str):
 
 @router.get("/")
 async def get_root(request: Request):
-    id_cliente = request.state.cliente.id
-    tarefas = TarefaRepo.obter_tarefas_do_cliente(id_cliente)
     return templates.TemplateResponse(
         "pages/sobre.html",
         {
             "request": request,
-            "tarefas": tarefas,
         },
     )
     
