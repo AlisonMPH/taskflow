@@ -1,31 +1,73 @@
-{% extends "pages/base.html" %}
-{% block subtitulo %}Nova Tarefa{% endblock %}
+{% extends "pages/base.html" %} {% block subtitulo %}Nova Tarefa{% endblock %}
 {% block conteudo %}
 <div class="container mt-4">
-    <h2>Cadastrar Nova Tarefa</h2>
-    <form action="{{ url_for('criar_tarefa') }}" method="post">
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" required>
+  <h1 class="display-5"><b>Cadastrar Nova Tarefa</b></h1>
+  <hr />
+  <form
+    class="row json-form"
+    id="form-nova-tarefa"
+    method="post"
+    action="/cliente/nova_tarefa/post_nova_tarefa"
+  >
+    <div class="col-md-12">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="titulo"
+          name="titulo"
+          placeholder=" "
+        />
+        <label for="titulo">Título</label>
+      </div>
+      <div class="form-floating mb-3">
+        <textarea
+          class="form-control"
+          id="descricao"
+          name="descricao"
+          placeholder=" "
+          style="height: 120px"
+        ></textarea>
+        <label for="descricao">Descrição</label>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-floating mb-3">
+            <input
+              type="date"
+              class="form-control"
+              id="data_vencimento"
+              name="data_vencimento"
+              required
+              placeholder=" "
+            />
+            <label for="data_vencimento">Data de Vencimento</label>
+          </div>
         </div>
-        <div class="mb-3">
-            <label for="descricao" class="form-label">Descrição</label>
-            <textarea class="form-control" id="descricao" name="descricao" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="data_vencimento" class="form-label">Data de Vencimento</label>
-            <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required>
-        </div>
-        <div class="mb-3">
-            <label for="id_categoria" class="form-label">Categoria</label>
-            <select class="form-control" id="id_categoria" name="id_categoria" required>
-                {% for categoria in categorias %}
-                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-                {% endfor %}
+        <div class="col-md-6">
+          <div class="form-floating mb-3">
+            <label for="id_categoria" class="form-label"></label>
+            <select
+              class="form-select"
+              id="id_categoria"
+              name="id_categoria" >
+              {% for categoria in categorias %}
+              <option value="{{ categoria.id }}">Categoria: {{ categoria.id }}- {{ categoria.nome }}</option>
+              {% endfor %}
             </select>
+          </div>
         </div>
+      </div>
+      <div>
         <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>
-
+<script src="/static/js/formToJson.js"></script>
+<script>
+  var hoje = new Date();
+  var dataFormatada = hoje.toISOString().split("T")[0];
+  document.getElementById("data_vencimento").min = dataFormatada;
+</script>
 {% endblock %}

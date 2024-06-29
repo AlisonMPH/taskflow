@@ -2,7 +2,6 @@ import re
 from datetime import date
 from typing import Any, Optional
 
-
 def is_in_range(
     field_value: int | float,
     field_label: str,
@@ -234,3 +233,9 @@ def is_date_between(
         return ""
     else:
         return f"O valor do campo <b>{field_label}</b> deve estar entre {min_date.strftime('%d/%m/%Y')} e {max_date.strftime('%d/%m/%Y')}."
+    
+def is_date_future(field_value: date, field_label: str) -> str:
+    if field_value < date.today():
+        field_label = "A data deve ser no futuro ou presente"
+        return field_label
+    return ""

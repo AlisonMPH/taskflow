@@ -1,3 +1,57 @@
+.bg-danger {
+    background-color: rgb(115, 115, 185) !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background-color: rgb(115, 115, 185) !important;
+    border-color: rgb(115, 115, 185) !important;
+    color: white !important;
+}
+
+.btn-danger:hover {
+    background-color: rgb(95, 95, 165) !important;
+    border-color: rgb(95, 95, 165) !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background-color: rgb(115, 185, 115) !important;
+    border-color: rgb(115, 185, 115) !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background-color: rgb(95, 165, 95) !important;
+    border-color: rgb(95, 165, 95) !important;
+    color: white !important;
+}
+
+.btn-primary,
+.btn-primary.active,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: rgb(60, 130, 230) !important;
+    border-color: rgb(60, 130, 230) !important;
+}
+
+/* Estilo para o dropdown-menu */
+.dropdown-item.active,
+.dropdown-item:focus,
+.dropdown-item.focus {
+    background-color: rgb(60, 130, 230) !important;
+    color: white !important;
+}
+
+/* Estilo para o dropdown-menu ao passar o mouse */
+.dropdown-item:hover {
+    background-color: rgb(40, 110, 200) !important;
+    color: white !important;
+}
+
 .page-link {
     color: var(--bs-danger);
     background-color: var(--bs-white);
