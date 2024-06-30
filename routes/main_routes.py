@@ -109,7 +109,7 @@ async def post_entrar(entrar_dto: EntrarDTO):
     response = JSONResponse(content={"redirect": {"url": entrar_dto.return_url}})
     adicionar_mensagem_sucesso(
         response,
-        f"Olá, <b>{cliente_entrou.nome}</b>. Seja bem-vindo(a) à Loja Virtual!",
+        f"Olá, <b>{cliente_entrou.nome}</b>. Seja bem-vindo(a) à Task Flow!",
     )
     adicionar_cookie_auth(response, token)
     return response
