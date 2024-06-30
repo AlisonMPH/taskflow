@@ -71,27 +71,25 @@ async def alterar_tarefa(request: Request, id: int):
         },
     )
 
-@router.post("/tarefas/{id}/alterar", response_class=HTMLResponse)
-async def alterar_tarefa(request: Request, id: int, titulo: str = Form(...), descricao: str = Form(...), data_vencimento: str = Form(...), id_categoria: int = Form(...)):
-    tarefa = TarefaRepo.obter_tarefa_por_id(id)
-    if not tarefa:
-        return HTMLResponse(status_code=404)
-
-    tarefa_atualizada = Tarefa(
-        id=id,
-        titulo=titulo,
-        descricao=descricao,
-        data_vencimento=data_vencimento,
-        id_categoria=id_categoria
-    )
-    
-    if TarefaRepo.alterar_tarefa(tarefa_atualizada):
-        response = RedirectResponse("/cliente/tarefas", status.HTTP_303_SEE_OTHER)
-        adicionar_mensagem_sucesso(response, "Tarefa alterada com sucesso!")
-    else:
-        response = JSONResponse(status_code=500, content={"error": "Não foi possível alterar a tarefa."})
+@router.post("/tarefas/{id}/alterar", response_class=JSONResponse)
+async def alterar_tarefa(request: Request, id: int, tarefa_dto: NovaTarefaDTO):
+    try:
+        tarefa_atualizada = {
+            "id": id,
+            "titulo": tarefa_dto.titulo,
+            "descricao": tarefa_dto.descricao,
+            "data_vencimento": tarefa_dto.data_vencimento,
+            "id_categoria": tarefa_dto.id_categoria,
+        }
         
-    return response
+        if TarefaRepo.alterar_tarefa(Tarefa(**tarefa_atualizada)):
+            return {"redirect": {"url": "/cliente/tarefas"}}
+        else:
+            return JSONResponse(status_code=500, content={"error": "Não foi possível alterar a tarefa."})
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro durante a alteração da tarefa: {str(e)}")
 
 @router.delete("/excluir_tarefa/{id}")
 async def excluir_tarefa(id: int):
